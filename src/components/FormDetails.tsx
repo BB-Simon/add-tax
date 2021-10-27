@@ -1,7 +1,4 @@
 import React, { ChangeEventHandler, FC } from 'react';
-import { Field } from 'formik';
-import Button from './Button';
-
 interface InputPropsTypes {
     type?: string
     value?: string | number
@@ -14,6 +11,7 @@ interface InputPropsTypes {
     error?: string
     disabled?: boolean
     checked?: boolean
+    width?: string
 }
 
 interface Props {
@@ -38,7 +36,7 @@ const FormDetails: FC<Props> = ({ title, formList }) => {
                             value={formItem.value ? formItem.value : ''}
                             name={formItem.name}
                             placeholder={formItem.placeholder}
-                            className={`w-6/12 border border-gray-400 py-2 px-4 rounded-md focus:ring-1 focus:ring-indigo-600 focus:border-0 ${formItem.error ? "db__input-error" : ""}`}
+                            className={`${formItem.width} border border-gray-400 py-2 px-4 rounded-md focus:ring-1 focus:ring-indigo-600 focus:border-0 ${formItem.error ? "db__input-error" : ""}`}
                         />
                         {formItem.error && <h4>{formItem.error}</h4>}
                     </>
@@ -65,16 +63,13 @@ const FormDetails: FC<Props> = ({ title, formList }) => {
                 <header>
                     <h1>{title}</h1>
                 </header>
-                <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
                     {formList.map((formItem, index) => (
-                        <div key={index}>
+                        <div key={index} className={`${formItem.inputType === "radio" ? "sm:col-span-3" : ""}`}>
                             {renderFormFileds(formItem)}
                         </div>
                     ))}
                 </div>
-                <footer>
-                    <Button type="submit" title={`Apply tax to ${6} item(s)`} />
-                </footer>
             </article>
         </section>
     )
